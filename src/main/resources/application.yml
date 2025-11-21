@@ -6,5 +6,6 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-  odcloud:
-    api-key: ${ODCLOUD_API_KEY}
+qnet:
+  base-url: https://apis.data.go.kr/B490007/qualExamSchd/getQualExamSchdList
+  service-key: ${CERTI_API_KEY}

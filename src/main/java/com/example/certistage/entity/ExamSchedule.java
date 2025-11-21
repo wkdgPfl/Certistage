@@ -6,21 +6,31 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "exam_schedule")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ExamSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String certificateName;    // 종목명
-    private String category;           // 항목 (예: 필기/실기 날짜)
-    @Column(columnDefinition = "TEXT")
-    private String content;            // 내용
+    private String category;
 
-    private LocalDate examDate;        // 날짜
+    @Column(name = "certificate_name")
+    private String certificateName;
+
+    private String content;
+
+    @Column(name = "exam_date")
+    private LocalDate examDate;
+
+    @Column(name = "exam_start_date")
+    private LocalDate examStartDate;
+
+    @Column(name = "exam_end_date")
+    private LocalDate examEndDate;
 }
