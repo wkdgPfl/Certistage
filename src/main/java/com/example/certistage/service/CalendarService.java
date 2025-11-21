@@ -2,6 +2,8 @@ package com.example.certistage.service;
 
 import com.example.certistage.dto.CalendarEventDto;
 import com.example.certistage.dto.ExamApiResponse;
+import com.example.certistage.entity.CertificateKeyword;
+import com.example.certistage.repository.CertificateKeywordRepository;
 import com.example.certistage.service.external.QnetClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,10 @@ import java.util.stream.Collectors;
 public class CalendarService {
 
     private final QnetClient qnetClient;
+    private final CertificateKeywordRepository keywordRepository;
 
     /**
-     * 전체 일정 리스트 생성
+     * Q-net 전체 일정 조회
      */
     public List<CalendarEventDto> getExamEvents(int year) {
         ExamApiResponse response = qnetClient.getExamScheduleAsDto(year);
@@ -37,6 +40,9 @@ public class CalendarService {
         return events;
     }
 
+    /**
+     * 이벤트 객체 생성 함수
+     */
     private void addEvent(List<CalendarEventDto> events, String date, String title, String type, String description) {
         if (date != null && !date.isEmpty()) {
             events.add(new CalendarEventDto(date, title, type, description));
@@ -44,25 +50,61 @@ public class CalendarService {
     }
 
     /**
-     * 특정 날짜만 필터링
+     * 특정 날짜별 일정 조회
      */
     public List<CalendarEventDto> getEventsByDate(LocalDate date) {
-        String target = date.toString().replace("-", ""); // yyyyMMdd 형태로 변환
+        String target = date.toString().replace("-", ""); // yyyyMMdd
 
-        return getExamEvents(date.getYear()).stream()
+        return getExamEvents(date.getYear())
+                .stream()
                 .filter(e -> e.getDate().equals(target))
                 .collect(Collectors.toList());
     }
 
     /**
-     * 특정 월만 필터링
+     * 특정 월 일정 조회
      */
     public List<CalendarEventDto> getEventsByMonth(int year, int month) {
 
         String prefix = String.format("%04d%02d", year, month); // yyyyMM
 
-        return getExamEvents(year).stream()
+        return getExamEvents(year)
+                .stream()
                 .filter(e -> e.getDate().startsWith(prefix))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 검색 필터링 (전공/분야 매핑 + 자격증명 검색)
+     */
+    public List<CalendarEventDto> filterEventsByKeyword(List<CalendarEventDto> events, String keyword) {
+        if (keyword == null || keyword.isEmpty()) return events;
+
+        String lowerKeyword = keyword.toLowerCase();
+
+        // 1) 전공/분야 키워드 DB 조회
+        List<CertificateKeyword> mappedCerts = keywordRepository.findByKeyword(keyword);
+
+        // 2) 전공/분야 검색이면 certificate_name 기반으로 필터링
+        if (!mappedCerts.isEmpty()) {
+            List<String> certificateNames = mappedCerts.stream()
+                    .map(c -> c.getCertificateName().toLowerCase())
+                    .toList();
+
+            return events.stream()
+                    .filter(e ->
+                            certificateNames.stream()
+                                    .anyMatch(cert -> e.getDescription().toLowerCase().contains(cert))
+                    )
+                    .collect(Collectors.toList());
+        }
+
+        // 3) 매핑 없으면 기존의 description.contains 방식
+        return events.stream()
+                .filter(e ->
+                        e.getDescription().toLowerCase().contains(lowerKeyword) ||
+                                e.getTitle().toLowerCase().contains(lowerKeyword)
+                )
                 .collect(Collectors.toList());
     }
 }

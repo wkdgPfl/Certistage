@@ -17,37 +17,56 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     /**
-     * 전체 시험 일정 목록 조회
-     * GET /api/calendar/events?year=2025
+     * 전체 일정 조회 (옵션: 검색)
+     * GET /api/calendar/events?year=2025&keyword=컴공
      */
     @GetMapping("/events")
     public ResponseEntity<List<CalendarEventDto>> getAllEvents(
-            @RequestParam(defaultValue = "2025") int year
+            @RequestParam(defaultValue = "2025") int year,
+            @RequestParam(required = false) String keyword
     ) {
-        return ResponseEntity.ok(calendarService.getExamEvents(year));
+        List<CalendarEventDto> events = calendarService.getExamEvents(year);
+
+        // 검색 필터링 적용
+        events = calendarService.filterEventsByKeyword(events, keyword);
+
+        return ResponseEntity.ok(events);
     }
 
     /**
      * 특정 날짜 일정 조회
-     * GET /api/calendar/date/2025-11-21
+     * GET /api/calendar/date/2025-11-21?keyword=컴공
      */
     @GetMapping("/date/{date}")
     public ResponseEntity<List<CalendarEventDto>> getSchedulesByDate(
-            @PathVariable String date
+            @PathVariable String date,
+            @RequestParam(required = false) String keyword
     ) {
         LocalDate parsed = LocalDate.parse(date);
-        return ResponseEntity.ok(calendarService.getEventsByDate(parsed));
+
+        List<CalendarEventDto> events = calendarService.getEventsByDate(parsed);
+
+        // 검색 필터링 적용
+        events = calendarService.filterEventsByKeyword(events, keyword);
+
+        return ResponseEntity.ok(events);
     }
 
     /**
-     * 특정 월 일정 조회 (옵션)
-     * GET /api/calendar/month/2025/11
+     * 특정 월 일정 조회
+     * GET /api/calendar/month/2025/11?keyword=컴공
      */
     @GetMapping("/month/{year}/{month}")
     public ResponseEntity<List<CalendarEventDto>> getSchedulesByMonth(
             @PathVariable int year,
-            @PathVariable int month
+            @PathVariable int month,
+            @RequestParam(required = false) String keyword
     ) {
-        return ResponseEntity.ok(calendarService.getEventsByMonth(year, month));
+        List<CalendarEventDto> events = calendarService.getEventsByMonth(year, month);
+
+        // 검색 필터링 적용
+        events = calendarService.filterEventsByKeyword(events, keyword);
+
+        return ResponseEntity.ok(events);
     }
 }
