@@ -16,7 +16,8 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "https://certistage-front.vercel.app",
-                                "http://localhost:3000"
+                                "http://localhost:3000",
+                                "http://localhost:5173"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("*")
