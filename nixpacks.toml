@@ -1,0 +1,16 @@
+[variables]
+JDK_VERSION = "21"
+
+[phases.setup]
+commands = [
+    "curl -L -o java21.tar.gz https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz",
+    "tar -xzf java21.tar.gz",
+    "mkdir -p /opt/java21",
+    "mv jdk-21*/* /opt/java21/"
+]
+
+[phases.build]
+environment = { JAVA_HOME = "/opt/java21" }
+
+[phases.start]
+environment = { JAVA_HOME = "/opt/java21" }
