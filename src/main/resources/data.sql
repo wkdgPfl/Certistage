@@ -47,3 +47,65 @@ INSERT INTO major (name) VALUES ('생명과학과');
 INSERT INTO major (name) VALUES ('통계학과');
 INSERT INTO major (name) VALUES ('빅데이터학과');
 INSERT INTO major (name) VALUES ('국제학과');
+
+-- 컴퓨터공학과(major_id = 1) 관련 더미데이터
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('정보처리기사', '기사', 'IT / 소프트웨어', '2025-06-15', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('정보보안기사', '기사', '보안', '2025-05-30', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('SQLD', '데이터', '데이터베이스', '2025-07-20', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('SQLP', '데이터', '데이터베이스', '2025-09-18', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('네트워크관리사 2급', '2급', '네트워크', '2025-08-05', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('리눅스마스터 2급', '2급', '리눅스 / 서버', '2025-10-12', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('정보기기운용기능사', '기능사', 'IT 기기', '2025-11-03', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('ADsP(데이터분석 준전문가)', '준전문가', '데이터', '2025-08-30', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('빅데이터분석기사', '기사', '데이터 / 빅데이터', '2025-12-10', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('AWS Certified Cloud Practitioner', '기초', '클라우드', '2025-06-10', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('AWS Solutions Architect Associate', 'Associate', '클라우드', '2025-08-14', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('Azure Fundamentals', '기초', '클라우드', '2025-09-10', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('Kubernetes 관리 자격 (CKA)', '전문가', '클라우드 / 컨테이너', '2025-07-08', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('도커 전문가 자격증', '전문가', '클라우드 / DevOps', '2025-10-21', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('정보보안산업기사', '산업기사', '보안', '2025-11-18', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('IoT지능형기기개발산업기사', '산업기사', 'IoT', '2025-09-27', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('소프트웨어자산관리사(SAM)', '전문가', 'IT / 자산관리', '2025-12-05', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('정보통신기사', '기사', '통신 / 네트워크', '2025-07-01', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('컴퓨터활용능력 1급', '1급', '사무 / 컴퓨터', '2025-06-11', 1);
+
+INSERT INTO certificate (name, level, field, next_exam_date, major_id)
+VALUES ('전자계산기조직응용기사', '기사', 'IT / 전산', '2025-08-19', 1);
