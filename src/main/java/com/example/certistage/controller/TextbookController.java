@@ -17,7 +17,9 @@ public class TextbookController {
         // 임시 더미 데이터
         return List.of(
                 new TextbookDto(1L, "정보처리기사 한 권으로 끝내기", 18000),
-                new TextbookDto(2L, "정보처리기사 기출문제집", 15000)
+                new TextbookDto(2L, "정보처리기사 기출문제집", 15000),
+                new TextbookDto(3L, "에듀윌 ADsP 책", 25000),
+                new TextbookDto(4L, "에듀윌 ADsP 책", 25000)
         );
     }
 }
